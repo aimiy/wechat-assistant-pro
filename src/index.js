@@ -29,7 +29,7 @@ if (padLocalToken) {
 
 
 bot.use(WechatyWebPanelPlugin({
-    apiKey: '***', apiSecret: '****',
+    apiKey: '32e36363bef783142eaafaf76cd1061acec7a5de', apiSecret: '195519de800eb73de662cb420dd3841f5887a5bc',
 }))
 bot.start()
     .catch((e) => console.error(e));
