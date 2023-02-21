@@ -1,5 +1,8 @@
-import {WechatyBuilder} from 'wechaty'
-import {WechatyWebPanelPlugin} from 'wechaty-web-panel'
+import { WechatyBuilder } from 'wechaty'
+// import {WechatyWebPanelPlugin} from 'wechaty-web-panel'
+import { onMessage } from './onMessage/index.js'
+import Qrterminal from 'qrcode-terminal';
+import { initDay } from './schedule/index.js';
 
 const name = 'wechat-assistant-pro';
 let bot = '';
@@ -27,9 +30,33 @@ if (padLocalToken) {
     });
 }
 
+// 插件使用
+// bot.use(WechatyWebPanelPlugin({
+//     apiKey: '32e36363bef783142eaafaf76cd1061acec7a5de', apiSecret: '195519de800eb73de662cb420dd3841f5887a5bc',
+// }))
+// 自己实现开始
+async function onScan(qrcode, status) {
+    Qrterminal.generate(qrcode);
+    console.log('扫描状态', status);
+    const qrImgUrl = ['https://api.qrserver.com/v1/create-qr-code/?data=', encodeURIComponent(qrcode)].join('');
+    console.loh(qrImgUrl)
+}
 
-bot.use(WechatyWebPanelPlugin({
-    apiKey: '32e36363bef783142eaafaf76cd1061acec7a5de', apiSecret: '195519de800eb73de662cb420dd3841f5887a5bc',
-}))
+// 登录
+async function onLogin(user) {
+    console.log(`贴心小助理${user}登录了`);
+    // 登陆后创建定时任务
+    await initDay(bot);
+}
+// 登出
+function onLogout(user) {
+    console.log(`小助手${user} 已经登出`);
+}
+bot.on('scan', onScan);
+bot.on('login', onLogin);
+bot.on('logout', onLogout);
+bot.on('message', onMessage);
+// 自己实现结束
+
 bot.start()
     .catch((e) => console.error(e));

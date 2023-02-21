@@ -29,3 +29,4 @@ wechat.config.json
 room.db
 
 .history/
+*.db
