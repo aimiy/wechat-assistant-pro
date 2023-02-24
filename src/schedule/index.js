@@ -16,17 +16,15 @@ async function initDay(bot) {
             let logMsg;
             switch (item.action) {
                 case "sendInfo":
-                    logMsg = item.info;
+                    let sweetWord = await superagent.getSweetWord();
+                    logMsg = `${item.info}\n\n${sweetWord}`;
                     break;
                 case "sendWeather":
                     let one = await superagent.getOne(); //获取每日一句
                     let today = await untils.formatDate(new Date()); //获取今天的日期
-                    let sweetWord = await superagent.getSweetWord();
                     let weather = await superagent.getTXweather(item.city);
 
-                    // 你可以修改下面的 str 来自定义每日说的内容和格式
-                    // PS: 如果需要插入 emoji(表情), 可访问 "https://getemoji.com/" 复制插入
-                    let str = `${today}\n今日天气\n${weather.weatherTips}\n${weather.todayWeather}\n每日一句:\n${one}\n\n每日土味情话：\n${sweetWord}`;
+                    let str = `${today}\n${item.city}今日天气\n${weather.weatherTips}\n${weather.todayWeather}\n${one}`;
                     logMsg = str;
                     break;
             }
