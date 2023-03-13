@@ -24,7 +24,7 @@ async function initDay(bot) {
                     let today = await untils.formatDate(new Date()); //获取今天的日期
                     let weather = await superagent.getTXweather(item.city);
 
-                    let str = `${today}\n${item.city}今日天气\n${weather.weatherTips}\n${weather.todayWeather}\n${one}`;
+                    let str = `${today}\n亲爱的${item.username}~${item.city}今日天气\n${weather.weatherTips}\n${weather.todayWeather}\n${one}`;
                     logMsg = str;
                     break;
             }

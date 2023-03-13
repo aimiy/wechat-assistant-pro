@@ -39,7 +39,7 @@ async function onScan(qrcode, status) {
     Qrterminal.generate(qrcode);
     console.log('扫描状态', status);
     const qrImgUrl = ['https://api.qrserver.com/v1/create-qr-code/?data=', encodeURIComponent(qrcode)].join('');
-    console.loh(qrImgUrl)
+    console.log(qrImgUrl)
 }
 
 // 登录
