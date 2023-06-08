@@ -2,6 +2,7 @@ import config from '../config/index.cjs';
 import schedule from "./schedule.cjs";
 import superagent from '../superagent/index.cjs'
 import untils from '../utils/index.cjs'
+import { clearDB } from "../api/room.js"
 // 延时函数，防止检测出类似机器人行为操作
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -38,6 +39,10 @@ async function initDay(bot) {
         });
     }
 
+    schedule.setSchedule('0 0 8 * * *', async () => {
+        console.log('清空聊天库');
+        clearDB()
+    });
 }
 
 export { initDay }

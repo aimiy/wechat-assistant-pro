@@ -82,6 +82,16 @@ DB.prototype.remove = function (query, options) {
         });
     });
 };
+DB.prototype.clear = function () {
+    return new Promise((resolve, reject) => {
+        this.db.remove({}, { multi: true }, (err, numAffected) => {
+            if (err) {
+                return reject(err);
+            }
+            resolve(numAffected);
+        });
+    });
+};
 export default (database) => {
     return new DB(database);
 };

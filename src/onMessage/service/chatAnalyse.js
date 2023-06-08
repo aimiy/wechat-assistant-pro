@@ -1,4 +1,4 @@
-import { getRoomRecordContent, getRoomRecordStatistic } from "../../db/roomDb.js"
+import { getRoomRecordContent, getRoomRecordStatistic } from "../../api/room.js"
 import { createCanvas, loadImage } from 'canvas'
 import { FileBox } from "file-box"
 import WordCloud1 from 'node-wordcloud'

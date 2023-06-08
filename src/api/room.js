@@ -1,4 +1,4 @@
-import nedb from './nedb.js';
+import nedb from '../db/nedb.js';
 const rdb = nedb('chat.db');
 /**
  * 记录群聊天记录 记录格式
@@ -140,4 +140,20 @@ export async function getRoomRecordStatistic(roomId, day) {
     }
 }
 // TODO 刷新roomId
+/**
+ * 清空数据库
+ * @param 
+ * @param 
+ * @returns {Promise<*>}
+ */
+export async function clearDB() {
+    try {
+        let numRemoved = await rdb.clear();
+        console.log(numRemoved)
+        return numRemoved;
+    }
+    catch (error) {
+        console.log('清空数据库错误', error);
+    }
+}
 //# sourceMappingURL=roomDb.js.map
