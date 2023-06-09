@@ -39,7 +39,7 @@ async function initDay(bot) {
         });
     }
 
-    schedule.setSchedule('0 0 8 * * *', async () => {
+    schedule.setSchedule('0 0 1 * * *', async () => {
         console.log('清空聊天库');
         clearDB()
     });

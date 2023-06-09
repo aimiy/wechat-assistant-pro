@@ -31,10 +31,12 @@ async function onMessage(msg) {
             let contactRoomAlias = await room.alias(contact) || name
 
             // 摸鱼统计
-            addRoomRecord({ roomName, roomId: room.id, content, contact: contactRoomAlias, wxid: contactId, time: new Date().getTime(), isText });
+
             if (!isText) {
+                addRoomRecord({ roomName, roomId: room.id, content: "[非文字]", contact: contactRoomAlias, wxid: contactId, time: new Date().getTime(), isText });
                 return;
             }
+            addRoomRecord({ roomName, roomId: room.id, content, contact: contactRoomAlias, wxid: contactId, time: new Date().getTime(), isText });
             console.log({ content, alias: await room.alias(contact) })
             let huifu;
             switch (true) {
