@@ -17,8 +17,7 @@ async function initDay(bot) {
             let logMsg;
             switch (item.action) {
                 case "sendInfo":
-                    let sweetWord = await superagent.getSweetWord();
-                    logMsg = `${item.info}\n\n${sweetWord}`;
+                    logMsg = `${item.info}`;
                     break;
                 case "sendWeather":
                     let one = await superagent.getOne(); //获取每日一句
@@ -27,6 +26,9 @@ async function initDay(bot) {
 
                     let str = `${today}\n亲爱的${item.username}~${item.city}今日天气\n${weather.weatherTips}\n${weather.todayWeather}\n${one}`;
                     logMsg = str;
+                    break;
+                case "offWork":
+                    logMsg = `亲爱的${item.username}\n-----❤温馨提醒❤-----\n上个厕所，准备快下班啦！！！`
                     break;
             }
             try {

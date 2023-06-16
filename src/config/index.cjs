@@ -16,8 +16,10 @@ module.exports = {
         { topic: '🇨🇳疯猫丑狗不正常🇨🇳', action: 'sendInfo', info: `-----⚠注意⚠-----\n别熬夜了！！快睡觉！！`, date: '0 0 23 * * *' },
 
         { topic: '喝水早睡提肛少久坐夸夸群', action: 'sendWeather', username: "一曈", city: "常州", date: '0 0 7 * * *' },
+        { topic: '喝水早睡提肛少久坐夸夸群', action: 'offWork', username: "百姐姐~蒲蒲~", date: '0 40 16 * * 1-5' },
+        { topic: '喝水早睡提肛少久坐夸夸群', action: 'offWork', username: "朵朵~摩托~一瞳~假喵~", date: '0 10 17 * * 1-5' },
+        { topic: '喝水早睡提肛少久坐夸夸群', action: 'offWork', username: "哀默~米粒~", date: '0 0 18 * * 1-5' },
         { topic: '喝水早睡提肛少久坐夸夸群', action: 'sendInfo', info: `-----⚠注意⚠-----\n放下二郎腿！！！！\n喝水去！！！！`, date: '0 30 9,10,14,15 * * 1-5' },
-        { topic: '喝水早睡提肛少久坐夸夸群', action: 'sendInfo', info: `-----❤温馨提醒❤-----\n上个厕所，准备快下班啦！！！`, date: '0 30 16 * * 1-5' },
         { topic: '喝水早睡提肛少久坐夸夸群', action: 'sendInfo', info: `-----⚠注意⚠-----\n快洗漱！！！！！！！`, date: '0 0 22 * * 1-5' },
         { topic: '喝水早睡提肛少久坐夸夸群', action: 'sendInfo', info: `-------⚠注意⚠-------\n快准备睡觉！！！！！！！\n记得打开sleeptown建房子！！！\n点击链接！打卡跟练！百岁相见！https://b23.tv/mU0PBFX`, date: '0 0 23 * * *' },
     ],

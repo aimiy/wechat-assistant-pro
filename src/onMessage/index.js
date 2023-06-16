@@ -49,10 +49,8 @@ async function onMessage(msg) {
                 case "今日排名" == content:
                 case "今日排行" == content:
                 case /摸鱼/.test(content):
-                    let sweetWord = await superagent.getSweetWord();
                     huifu = `${today}\n今日摸鱼排行：\n`
                     huifu += await getRoomRecordStatistic(room.id, 0);
-                    huifu += `\n${sweetWord}`
                     break;
                 case "三日排行" == content:
                     huifu = `截止${today}\n三日摸鱼排行：\n`
