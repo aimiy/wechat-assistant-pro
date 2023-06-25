@@ -8,10 +8,10 @@ const superagent = require('superagent')
  * @param data 请求body
  * @param cookies cookies
  * @param spider 是否需要爬取数据
- * @param platform 请求哪个平台 tx 天行数据  tl 图灵机器人
+ * @param platform 请求哪个平台 tx 天行数据  tl 图灵机器人 AFX 爱分享
  * @returns {Promise}
  */
-function req({url, method, params, data, cookies, spider = false, platform = 'tx'}) {
+function req({ url, method, params, data, cookies, spider = false, platform = 'tx' }) {
     return new Promise(function (resolve, reject) {
         superagent(method, url)
             .query(params)
@@ -26,7 +26,7 @@ function req({url, method, params, data, cookies, spider = false, platform = 'tx
                     resolve(response.text)
                 } else { // 如果是非爬虫，返回格式化后的内容
                     const res = JSON.parse(response.text);
-                    if (res.code !== 200 && platform === 'tx' || res.code !== 100000 && platform === 'tl') {
+                    if (res.code !== 200 && platform === 'tx' || res.code !== 100000 && platform === 'tl' || res.success !== '1' && platform === 'AFX') {
                         console.error('接口请求失败', res.msg || res.text)
                     }
                     resolve(res)

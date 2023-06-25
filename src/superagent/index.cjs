@@ -1,18 +1,37 @@
 const superagent = require('./superagent.cjs');
 const config = require('../config/index.cjs');
 const cheerio = require('cheerio');
-const {machineIdSync} = require('node-machine-id');
+const { machineIdSync } = require('node-machine-id');
 const crypto = require('crypto');
 let md5 = crypto.createHash('md5');
 let uniqueId = md5.update(machineIdSync()).digest('hex'); // 获取机器唯一识别码并MD5，方便机器人上下文关联
 const ONE = 'http://wufazhuce.com/'; // ONE的web版网站
 const TXHOST = 'http://api.tianapi.com/'; // 天行host
 const TULINGAPI = 'http://www.tuling123.com/openapi/api'; // 图灵1.0接口api
+const WEIFENXIANG = 'https://api.liangmlk.cn'; // 味分享接口
 
+async function getWorkDay(today) {
+    // 获取每日一句
+    try {
+        let res = await superagent.req({
+            url: WEIFENXIANG, method: 'GET', params: {
+                appid: 41,
+                ak: config.WEIFENXIANG_ak,
+                areaType: '',
+                date: today
+            },
+            platform: 'AFX'
+        });
+        return res;
+    } catch (err) {
+        console.log('获取工作日出错', err);
+        return err;
+    }
+}
 async function getOne() {
     // 获取每日一句
     try {
-        let res = await superagent.req({url: ONE, method: 'GET', spider: true});
+        let res = await superagent.req({ url: ONE, method: 'GET', spider: true });
         let $ = cheerio.load(res);
         let todayOneList = $('#carousel-one .carousel-inner .item');
         let todayOne = $(todayOneList[0])
@@ -30,9 +49,11 @@ async function getDujitang() {
     // 获取毒鸡汤
     let url = TXHOST + 'dujitang/index';
     try {
-        let content = await superagent.req({url: url, method: 'GET', params: {
-            key: config.TXAPIKEY,
-        }});
+        let content = await superagent.req({
+            url: url, method: 'GET', params: {
+                key: config.TXAPIKEY,
+            }
+        });
         if (content.code === 200) {
             let str = content.newslist[0].content;
             console.info('获取毒鸡汤成功', str);
@@ -139,7 +160,7 @@ async function getSweetWord() {
     // 获取土味情话
     let url = TXHOST + 'saylove/';
     try {
-        let content = await superagent.req({url, method: 'GET', params: {key: config.TXAPIKEY}});
+        let content = await superagent.req({ url, method: 'GET', params: { key: config.TXAPIKEY } });
         if (content.code === 200) {
             let sweet = content.newslist[0].content;
             let str = sweet.replace('\r\n', '<br>');
@@ -156,7 +177,7 @@ async function getHuabian() {
     // 获取娱乐新闻
     let url = TXHOST + 'huabian/index';
     try {
-        let content = await superagent.req({url, method: 'GET', params: {key: config.TXAPIKEY}});
+        let content = await superagent.req({ url, method: 'GET', params: { key: config.TXAPIKEY } });
         if (content.code === 200) {
             return content.newslist;
         } else {
@@ -171,11 +192,11 @@ async function getTiku() {
     // 获取题库
     let url = TXHOST + 'baiketiku/index';
     try {
-        let content = await superagent.req({url, method: 'GET', params: {key: config.TXAPIKEY}});
+        let content = await superagent.req({ url, method: 'GET', params: { key: config.TXAPIKEY } });
         if (content.code === 200) {
             return content.newslist[0];
         } else {
-            throw(new Error("获取题库失败"))
+            throw (new Error("获取题库失败"))
         }
     } catch (err) {
         console.log('获取接口失败', err);
@@ -189,8 +210,8 @@ async function getTiku() {
 
 async function getRubbishType(word) {
     let url = TXHOST + 'lajifenlei/';
-    let content = await superagent.req({url, method: 'GET', params: {key: config.TXAPIKEY, word: word}});
-    
+    let content = await superagent.req({ url, method: 'GET', params: { key: config.TXAPIKEY, word: word } });
+
     if (content.code === 200) {
         let type;
         if (content.newslist[0].type == 0) {
@@ -218,6 +239,7 @@ async function getRubbishType(word) {
 }
 
 module.exports = {
+    getWorkDay,
     getOne,
     getDujitang,
     getTXweather,

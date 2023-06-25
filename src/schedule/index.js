@@ -19,7 +19,7 @@ async function initDay(bot) {
                 case "sendInfo":
                     logMsg = `${item.info}`;
                     break;
-                case "sendWeather":
+                case "sendWeather": {
                     let one = await superagent.getOne(); //获取每日一句
                     let today = await untils.formatDate(new Date()); //获取今天的日期
                     let weather = await superagent.getTXweather(item.city);
@@ -27,7 +27,13 @@ async function initDay(bot) {
                     let str = `${today}\n亲爱的${item.username}~${item.city}今日天气\n${weather.weatherTips}\n${weather.todayWeather}\n${one}`;
                     logMsg = str;
                     break;
+                }
                 case "offWork":
+                    let today = await untils.formatDateNum(new Date()); //获取今天的日期
+                    let res = await superagent.getWorkDay(today);
+                    if (res.result.workmk !== '1') {
+                        return
+                    }
                     logMsg = `亲爱的${item.username}\n-----❤温馨提醒❤-----\n上个厕所，准备快下班啦！！！`
                     break;
             }

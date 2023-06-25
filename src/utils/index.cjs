@@ -44,6 +44,14 @@ function formatDate(date) {
   return year + '-' + month + '-' + day + '日 ' + hour + ':' + min + ' ' + str;
 }
 
+function formatDateNum(date) {
+  var tempDate = new Date(date);
+  var year = tempDate.getFullYear();
+  var month = tempDate.getMonth() + 1;
+  var day = tempDate.getDate();
+  return year + '-' + month + '-' + day;
+}
+
 function formatDay(date) {
   var tempDate = new Date(date);
   var year = tempDate.getFullYear();
@@ -55,5 +63,6 @@ function formatDay(date) {
 module.exports = {
   getDay,
   formatDate,
-  formatDay
+  formatDay,
+  formatDateNum
 };

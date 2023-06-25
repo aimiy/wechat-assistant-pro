@@ -30,3 +30,5 @@ room.db
 
 .history/
 *.db
+
+src/config/index.cjs
