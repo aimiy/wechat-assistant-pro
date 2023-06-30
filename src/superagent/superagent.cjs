@@ -1,5 +1,5 @@
 const superagent = require('superagent')
-
+const config = require('../config/index.cjs');
 /**
  *
  * @param url 请求地址
@@ -34,7 +34,28 @@ function req({ url, method, params, data, cookies, spider = false, platform = 't
             })
     })
 }
-
+const openaiReq = ({ url, method, params, data, cookies }) => {
+    return new Promise(function (resolve, reject) {
+        superagent(method, url)
+            .query(params)
+            .send(data)
+            .set('Content-Type', 'application/json')
+            .set('Authorization', 'Bearer' + config.api2d_key)
+            .end(function (err, response) {
+                if (err) {
+                    console.log('请求出错', err)
+                    reject(err)
+                }
+                if (response.statusCode !== 200) {
+                    console.error('接口请求失败')
+                    reject(response)
+                }
+                const res = JSON.parse(response.text);
+                resolve(res)
+            })
+    })
+}
 module.exports = {
-    req
+    req,
+    openaiReq
 }

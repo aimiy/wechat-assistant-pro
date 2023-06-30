@@ -41,11 +41,22 @@ async function onMessage(msg) {
             let huifu;
             switch (true) {
                 case content.substr(0, 2) == '三猫':
-                    let contactContent = content.replace('三猫', '');
-                    if (contactContent) {
-                        huifu = await superagent.getReply(contactContent);
+                    {
+                        let contactContent = content.replace('三猫', '');
+                        if (contactContent) {
+                            huifu = await superagent.getReply(contactContent);
+                        }
+                        break;
                     }
-                    break;
+                case content.substr(0, 4) == '聪明三猫':
+                    {
+                        let contactContent = content.replace('聪明三猫', '');
+                        if (contactContent) {
+                            console.log('gpt被问了一个问题,等待回复', contactContent)
+                            huifu = await superagent.getSmart(contactContent);
+                        }
+                        break;
+                    }
                 case "今日排名" == content:
                 case "今日排行" == content:
                 case /摸鱼/.test(content):
@@ -87,6 +98,15 @@ async function onMessage(msg) {
                         huifu = await superagent.getReply(contactContent);
                     }
                     break;
+                case content.substr(0, 4) == '聪明三猫':
+                    {
+                        let contactContent = content.replace('聪明三猫', '');
+                        if (contactContent) {
+                            console.log('gpt被问了一个问题,等待回复', contactContent)
+                            huifu = await superagent.getSmart(contactContent);
+                        }
+                        break;
+                    }
                 case "新闻" == content:
                     let list = await superagent.getHuabian();
                     huifu = "";

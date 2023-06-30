@@ -10,6 +10,29 @@ const TXHOST = 'http://api.tianapi.com/'; // 天行host
 const TULINGAPI = 'http://www.tuling123.com/openapi/api'; // 图灵1.0接口api
 const WEIFENXIANG = 'https://api.liangmlk.cn'; // 味分享接口
 
+async function getSmart(content) {
+    // 获取gpt回复
+    try {
+        let res = await superagent.openaiReq({
+            url: 'https://oa.api2d.net/v1/chat/completions', method: 'POST', data: {
+                "model": "gpt-3.5-turbo",
+                "messages": [
+                    {
+                        "role": "user",
+                        "content": content
+                    }
+                ],
+                "safe_mode": false
+            }
+        });
+        let c = res.choices[0].message.content
+        return c;
+    } catch (err) {
+        console.log('获取gpt回复出错', err);
+        return err;
+    }
+}
+
 async function getWorkDay(today) {
     // 获取每日一句
     try {
@@ -239,6 +262,7 @@ async function getRubbishType(word) {
 }
 
 module.exports = {
+    getSmart,
     getWorkDay,
     getOne,
     getDujitang,
