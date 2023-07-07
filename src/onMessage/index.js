@@ -52,6 +52,10 @@ async function onMessage(msg) {
                     {
                         let contactContent = content.replace('聪明三猫', '');
                         if (contactContent) {
+                            if (contactContent.length <= 6) {
+                                huifu = await superagent.getReply(contactContent);
+                                break;
+                            }
                             console.log('gpt被问了一个问题,等待回复', contactContent)
                             huifu = await superagent.getSmart(contactContent);
                         }

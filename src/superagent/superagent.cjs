@@ -40,7 +40,7 @@ const openaiReq = ({ url, method, params, data, cookies }) => {
             .query(params)
             .send(data)
             .set('Content-Type', 'application/json')
-            .set('Authorization', 'Bearer' + config.api2d_key)
+            .set('Authorization', 'Bearer ' + config.api2d_key)
             .end(function (err, response) {
                 if (err) {
                     console.log('请求出错', err)
