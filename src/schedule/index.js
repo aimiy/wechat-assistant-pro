@@ -3,6 +3,7 @@ import schedule from "./schedule.cjs";
 import superagent from '../superagent/index.cjs'
 import untils from '../utils/index.cjs'
 import { clearDB } from "../api/room.js"
+import { getIsWorkToday } from "../api/config.js"
 // 延时函数，防止检测出类似机器人行为操作
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -29,9 +30,8 @@ async function initDay(bot) {
                     break;
                 }
                 case "offWork":
-                    let today = await untils.formatDateNum(new Date()); //获取今天的日期
-                    let res = await superagent.getWorkDay(today);
-                    if (res.result.workmk !== '1') {
+                    let workmk = await getIsWorkToday();
+                    if (workmk !== '1') {
                         return
                     }
                     logMsg = `亲爱的${item.username}\n-----❤温馨提醒❤-----\n上个厕所，准备快下班啦！！！`
