@@ -9,12 +9,13 @@ const ONE = 'http://wufazhuce.com/'; // ONE的web版网站
 const TXHOST = 'http://api.tianapi.com/'; // 天行host
 const TULINGAPI = 'http://www.tuling123.com/openapi/api'; // 图灵1.0接口api
 const WEIFENXIANG = 'https://api.liangmlk.cn'; // 味分享接口
+const OPENAI_PROXY = 'https://openai.api2d.net'
 
 async function getSmart(content) {
     // 获取gpt回复
     try {
         let res = await superagent.openaiReq({
-            url: 'https://oa.api2d.net/v1/chat/completions', method: 'POST', data: {
+            url: OPENAI_PROXY + '/v1/chat/completions', method: 'POST', data: {
                 "model": "gpt-3.5-turbo",
                 "messages": [
                     {
@@ -32,6 +33,42 @@ async function getSmart(content) {
         return err;
     }
 }
+async function getSmartVersion4(content) {
+    // 获取gpt回复
+    try {
+        let res = await superagent.openaiReq({
+            url: OPENAI_PROXY + '/v1/chat/completions', method: 'POST', data: {
+                "model": "gpt-4-0613",
+                "messages": [
+                    {
+                        "role": "user",
+                        "content": content
+                    }
+                ],
+                "safe_mode": false,
+                "max_tokens": 3334
+            }
+        });
+        let c = res.choices[0].message.content
+        return c;
+    } catch (err) {
+        console.log('获取gpt回复出错', err);
+        return err;
+    }
+}
+async function getBill(content) {
+    // 获取gpt回复
+    try {
+        let res = await superagent.openaiReq({
+            url: OPENAI_PROXY + '/dashboard/billing/credit_grants', method: 'get', params: {}
+        });
+        return res.total_available;
+    } catch (err) {
+        console.log('获取gpt余额出错', err);
+        return err;
+    }
+}
+
 
 async function getWorkDay(today) {
     // 获取每日一句
@@ -262,6 +299,8 @@ async function getRubbishType(word) {
 }
 
 module.exports = {
+    getBill,
+    getSmartVersion4,
     getSmart,
     getWorkDay,
     getOne,

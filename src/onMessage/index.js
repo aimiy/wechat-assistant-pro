@@ -61,6 +61,19 @@ async function onMessage(msg) {
                         }
                         break;
                     }
+                case content.substr(0, 4) == '聪明四猫':
+                    {
+                        let contactContent = content.replace('聪明四猫', '');
+                        if (contactContent) {
+                            if (contactContent.length <= 4) {
+                                huifu = await superagent.getReply(contactContent);
+                                break;
+                            }
+                            console.log('gpt4被问了一个问题,等待回复', contactContent)
+                            huifu = await superagent.getSmartVersion4(contactContent);
+                        }
+                        break;
+                    }
                 case "今日排名" == content:
                 case "今日排行" == content:
                 case /摸鱼/.test(content):
@@ -79,6 +92,9 @@ async function onMessage(msg) {
                         huifu += `${index}：${item.title}${item.url}\n`
                         index++;
                     }
+                    break;
+                case content == "余额":
+                    huifu = await superagent.getBill()
                     break;
             }
             baikeMessage(this, content, contactRoomAlias, room)
@@ -106,8 +122,25 @@ async function onMessage(msg) {
                     {
                         let contactContent = content.replace('聪明三猫', '');
                         if (contactContent) {
+                            if (contactContent.length <= 6) {
+                                huifu = await superagent.getReply(contactContent);
+                                break;
+                            }
                             console.log('gpt被问了一个问题,等待回复', contactContent)
                             huifu = await superagent.getSmart(contactContent);
+                        }
+                        break;
+                    }
+                case content.substr(0, 4) == '聪明四猫':
+                    {
+                        let contactContent = content.replace('聪明四猫', '');
+                        if (contactContent) {
+                            if (contactContent.length <= 4) {
+                                huifu = await superagent.getReply(contactContent);
+                                break;
+                            }
+                            console.log('gpt4被问了一个问题,等待回复', contactContent)
+                            huifu = await superagent.getSmartVersion4(contactContent);
                         }
                         break;
                     }
@@ -122,6 +155,9 @@ async function onMessage(msg) {
                     break;
                 case content == "清空":
                     clearDB()
+                    break;
+                case content == "余额":
+                    huifu = await superagent.getBill()
                     break;
             }
             baikeMessage(this, content, name, contact)
