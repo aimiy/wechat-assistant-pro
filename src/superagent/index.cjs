@@ -9,7 +9,7 @@ const ONE = 'http://wufazhuce.com/'; // ONE的web版网站
 const TXHOST = 'http://api.tianapi.com/'; // 天行host
 const TULINGAPI = 'http://www.tuling123.com/openapi/api'; // 图灵1.0接口api
 const WEIFENXIANG = 'https://api.liangmlk.cn'; // 味分享接口
-const OPENAI_PROXY = 'https://openai.api2d.net'
+const OPENAI_PROXY = 'https://oa.api2d.net'
 
 async function getSmart(content) {
     // 获取gpt回复
